@@ -1,0 +1,31 @@
+const { merge } = require("webpack-merge");
+const ModuleFederationPlugin =
+	require("webpack").container.ModuleFederationPlugin;
+const commonConfig = require("./webpack.common.js");
+const packageJson = require("../package.json");
+const webpack = require("webpack");
+const domain = process.env.PRODUCTION_DOMAIN_MARKETING;
+
+const prodConfig = {
+	mode: "production",
+	output: {
+		filename: "[name].[contenthash].js",
+		publicPath: `${domain}/marketing/`,
+	},
+	plugins: [
+		new webpack.DefinePlugin({
+			"process.env.PRODUCTION": JSON.stringify(true),
+			"process.env.ASSETS_HOST": JSON.stringify(domain),
+		}),
+		new ModuleFederationPlugin({
+			name: "marketing",
+			filename: "remoteEntry.js",
+			exposes: {
+				"./MarketingApp": "./src/bootstrap",
+			},
+			shared: { ...packageJson.dependencies },
+		}),
+	],
+};
+
+module.exports = merge(prodConfig, commonConfig);
