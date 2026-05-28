@@ -6,7 +6,7 @@ on:
             - master
             - main
         paths:
-            - "packages/container/" # Only run when container package changes
+            - "packages/container/**" # Only run when container package changes
             - ".github/workflows/deploy-container.yml"
 
 defaults:
