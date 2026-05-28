@@ -17,7 +17,7 @@ jobs:
         runs-on: ubuntu-latest
 
         steps:
-            # 1. Checkout code
+            # 1. Checkout code updated
             - uses: actions/checkout@v5 # use latest v4 instead of v2
 
             # 2. Setup Node.js
