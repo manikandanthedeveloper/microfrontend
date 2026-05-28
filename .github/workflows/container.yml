@@ -33,23 +33,23 @@ jobs:
               run: npm ci
 
             # 3.5. Verify PRODUCTION_DOMAIN secret
-            # - name: Check PRODUCTION_DOMAIN
-            #   run: |
-            #       if [ -z "$PRODUCTION_DOMAIN" ]; then
-            #         echo "ERROR: PRODUCTION_DOMAIN is not set!"
-            #         echo "Please add it in GitHub Settings > Secrets > Actions"
-            #         exit 1
-            #       else
-            #         echo "PRODUCTION_DOMAIN is set (length: ${#PRODUCTION_DOMAIN})"
-            #       fi
-            #   env:
-            #       PRODUCTION_DOMAIN: ${{ secrets.PRODUCTION_DOMAIN }}
+            - name: Check PRODUCTION_DOMAIN
+              run: |
+                  if [ -z "$PRODUCTION_DOMAIN" ]; then
+                    echo "ERROR: PRODUCTION_DOMAIN is not set!"
+                    echo "Please add it in GitHub Settings > Secrets > Actions"
+                    exit 1
+                  else
+                    echo "PRODUCTION_DOMAIN is set (length: ${#PRODUCTION_DOMAIN})"
+                  fi
+              env:
+                  PRODUCTION_DOMAIN: ${{ secrets.PRODUCTION_DOMAIN }}
 
             # # 4. Build the project
-            # - name: Build
-            #   env:
-            #       PRODUCTION_DOMAIN: ${{ secrets.PRODUCTION_DOMAIN }}
-            #   run: npm run build
+            - name: Build
+              env:
+                  PRODUCTION_DOMAIN: ${{ secrets.PRODUCTION_DOMAIN }}
+              run: npm run build
 
             # 5. Configure AWS credentials (uses IAM keys & region)
             - name: Configure AWS Credentials
@@ -61,7 +61,7 @@ jobs:
 
             # 6. Deploy build artifacts to S3 (root level)
             - name: Deploy to S3
-              run: aws s3 sync dist s3://${{ secrets.AWS_S3_BUCKET_NAME }}/ --delete
+              run: aws s3 sync dist s3://${{ secrets.AWS_S3_BUCKET_NAME }}/container/ --delete
 
             # CloudFront invalidation disabled - distribution doesn't exist or ID is incorrect
             # To enable: Get correct Distribution ID from CloudFront console and update CLOUDFRONT_DISTRIBUTION_ID secret
