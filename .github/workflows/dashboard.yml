@@ -5,6 +5,8 @@ on:
         branches:
             - master
             - main
+        paths:
+            - "packages/dashboard/**"
 
 defaults:
     run:
@@ -71,3 +73,9 @@ jobs:
                     --include "*.html" \
                     --cache-control "public,max-age=0,must-revalidate" \
                     --content-type "text/html"
+             # CloudFront invalidation disabled - distribution doesn't exist or ID is incorrect
+            # To enable: Get correct Distribution ID from CloudFront console and update CLOUDFRONT_DISTRIBUTION_ID secret
+            - name: Invalidate CloudFront Cache
+              run: |
+                  aws cloudfront create-invalidation --distribution-id ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }} --paths "/dashboard/index.html" "/dashboard/static/*" "/dashboard/remote-entry.js"
+            # Updated: 2025-12-03
