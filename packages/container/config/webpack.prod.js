@@ -17,7 +17,7 @@ const prodConfig = {
 	output: {
 		filename: "[name].[contenthash].js",
 		// publicPath: `${domain}/`,
-		publicPath: "/container/latest",
+		publicPath: "/container",
 	},
 	plugins: [
 		new ModuleFederationPlugin({
