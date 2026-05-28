@@ -50,7 +50,10 @@ jobs:
               env:
                   PRODUCTION_DOMAIN: ${{ secrets.PRODUCTION_DOMAIN }}
               run: npm run build
-
+            - name: Check Build Files 
+              run: | 
+                pwd ls -la 
+                ls -la dist || true
             # 5. Configure AWS credentials (uses IAM keys & region)
             - name: Configure AWS Credentials
               uses: aws-actions/configure-aws-credentials@v4
