@@ -6,8 +6,8 @@ on:
             - master
             - main
         # Temporarily removed paths filter to debug deployment
-        paths:
-            - "packages/auth/**"
+        # paths:
+        #     - "packages/auth/**"
 
 defaults:
     run:
