@@ -5,8 +5,8 @@ on:
         branches:
             - master
             - main
-        # paths:
-        #     - "packages/container/**" # Only run when container package changes
+        paths:
+            - "packages/container/**" # Only run when container package changes
 
 defaults:
     run:
