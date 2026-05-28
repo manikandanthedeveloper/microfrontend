@@ -5,12 +5,14 @@ const commonConfig = require("./webpack.common.js");
 const packageJson = require("../package.json");
 const webpack = require("webpack");
 const domain = process.env.PRODUCTION_DOMAIN_AUTH;
+const path = require("path");
 
 const prodConfig = {
 	mode: "production",
 	output: {
 		filename: "[name].[contenthash].js",
-		publicPath: `${domain}/auth/`,
+		path: path.resolve(__dirname, "dist"),
+		publicPath: "auto",
 	},
 	plugins: [
 		new webpack.DefinePlugin({

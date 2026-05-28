@@ -4,6 +4,7 @@ const ModuleFederationPlugin =
 const commonConfig = require("./webpack.common.js");
 const packageJson = require("../package.json");
 const domain = process.env.PRODUCTION_DOMAIN;
+const path = require("path");
 
 if (!domain) {
 	throw new Error(
@@ -16,7 +17,8 @@ const prodConfig = {
 	mode: "production",
 	output: {
 		filename: "[name].[contenthash].js",
-		publicPath: `${domain}/`,
+		path: path.resolve(__dirname, "dist"),
+		publicPath: "auto",
 	},
 	plugins: [
 		new ModuleFederationPlugin({
